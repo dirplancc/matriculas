@@ -1,0 +1,1178 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Matrículas Equivalentes | IFF Campos Centro</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --iff-green: #2E7D32;
+  --iff-green-light: #388E3C;
+  --iff-green-dark: #1B5E20;
+  --iff-green-deep: #103f20;
+  --iff-green-bg: #E8F5E9;
+  --iff-green-mid: #C8E6C9;
+  --iff-green-soft: #f3fbf4;
+  --iff-red: #C62828;
+  --iff-red-light: #E53935;
+  --iff-red-bg: #FFEBEE;
+  --iff-red-mid: #FFCDD2;
+  --font-sans: 'Manrope', 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --color-text-primary: #173122;
+  --color-text-secondary: #557263;
+  --color-background-primary: rgba(255, 255, 255, 0.9);
+  --color-background-secondary: #f6faf7;
+  --color-background-tertiary: rgba(232, 245, 233, 0.6);
+  --color-border-primary: rgba(46, 125, 50, 0.18);
+  --color-border-tertiary: rgba(23, 49, 34, 0.12);
+  --border-radius-md: 16px;
+  --border-radius-lg: 26px;
+  --shadow-soft: 0 18px 50px rgba(16, 63, 32, 0.12);
+  --shadow-card: 0 14px 34px rgba(16, 63, 32, 0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+  background:
+    radial-gradient(circle at top left, rgba(56, 142, 60, 0.18), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(198, 40, 40, 0.08), transparent 22%),
+    linear-gradient(145deg, #f4f8f4 0%, #edf5ef 52%, #f7faf8 100%);
+  padding: 32px 18px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(16, 63, 32, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 63, 32, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.45), transparent 78%);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.app {
+  position: relative;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(18px);
+}
+
+.app::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,0.5), transparent 24%, transparent 70%, rgba(255,255,255,0.35));
+}
+
+.header {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--iff-green-deep) 0%, var(--iff-green-dark) 46%, #276b30 100%);
+  padding: 1.5rem 1.6rem;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 20px 38px rgba(16, 63, 32, 0.24);
+}
+
+.header::before,
+.header::after {
+  content: '';
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+}
+
+.header::before {
+  width: 220px;
+  height: 220px;
+  right: -70px;
+  top: -110px;
+}
+
+.header::after {
+  width: 140px;
+  height: 140px;
+  right: 130px;
+  bottom: -80px;
+}
+.logo-box {
+  position: relative;
+  width: 52px; height: 52px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(239, 247, 241, 0.92));
+  border: 1px solid rgba(255,255,255,0.65);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 10px 22px rgba(11, 34, 20, 0.2);
+}
+.logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+.header-text,
+.portaria-badge {
+  position: relative;
+  z-index: 1;
+}
+.header-text h1 {
+  color: white; font-size: 1.1rem; font-weight: 700; margin: 0;
+  letter-spacing: -0.02em;
+}
+.header-text p {
+  color: rgba(255,255,255,0.78); font-size: 12px; margin-top: 4px;
+}
+.portaria-badge {
+  margin-left: auto; flex-shrink: 0;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.24);
+  color: white; font-size: 11px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+}
+.portaria-badge:hover,
+.portaria-badge:focus-visible {
+  background: rgba(255,255,255,0.22);
+  color: white;
+}
+
+.tabs {
+  display: flex; gap: 6px; margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  padding: 6px;
+  border: 1px solid var(--color-border-primary);
+  border-radius: 22px;
+  background: rgba(246, 250, 247, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.tab {
+  padding: 8px 18px; font-size: 13px; font-weight: 500;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.tab.active {
+  background: linear-gradient(135deg, var(--iff-green-dark), #2f7c35);
+  color: white; border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 12px 20px rgba(27, 94, 32, 0.18);
+}
+.tab:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(27, 94, 32, 0.12);
+}
+.tab:hover:not(.active) {
+  background: var(--iff-green-bg);
+  border-color: var(--iff-green-mid);
+  color: var(--iff-green-dark);
+}
+
+.panel { display: none; }
+.panel.active {
+  display: block;
+  animation: panel-fade 0.28s ease;
+}
+
+@keyframes panel-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.filter-row {
+  display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap;
+  align-items: center;
+}
+.filter-btn {
+  padding: 5px 12px; font-size: 12px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 20px;
+  background: rgba(255,255,255,0.86);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.filter-btn.active {
+  background: var(--iff-green-dark);
+  color: white; border-color: var(--iff-green-dark);
+}
+.filter-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(27, 94, 32, 0.1);
+}
+.filter-btn:hover:not(.active) {
+  background: var(--iff-green-bg);
+  border-color: var(--iff-green-mid);
+  color: var(--iff-green-dark);
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-border-primary);
+  background: rgba(255,255,255,0.76);
+  box-shadow: var(--shadow-card);
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+thead { background: linear-gradient(135deg, var(--iff-green-deep), var(--iff-green-dark)); }
+thead th { color: white; font-weight: 500; padding: 10px 12px; text-align: left; }
+thead th:nth-child(1) { width: 48%; }
+thead th:nth-child(2) { width: 12%; }
+thead th:nth-child(3) { width: 12%; }
+thead th:nth-child(4) { width: 28%; }
+tbody tr { border-bottom: 1px solid rgba(23, 49, 34, 0.08); transition: background 0.16s ease, transform 0.16s ease; }
+tbody tr:nth-child(even) { background: rgba(246, 250, 247, 0.72); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--iff-green-bg); }
+tbody td { padding: 9px 12px; color: var(--color-text-primary); vertical-align: top; }
+.grau-badge {
+  display: inline-block;
+  padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid rgba(23, 49, 34, 0.08);
+}
+.grau-técnico { background: #E8F5E9; color: #2E7D32; }
+.grau-graduação { background: #E3F2FD; color: #1565C0; }
+.grau-pós-graduação { background: #FFF3E0; color: #BF360C; }
+.grau-mestrado { background: #EDE7F6; color: #4527A0; }
+.grau-doutorado { background: #FCE4EC; color: #880E4F; }
+.fec-val { font-weight: 500; color: var(--iff-green-dark); }
+.fonte-cell { font-size: 11px; color: var(--color-text-secondary); line-height: 1.4; word-break: break-word; }
+.empty-row td { text-align: center; padding: 2rem; color: var(--color-text-secondary); font-size: 13px; }
+
+.calc-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+@media (max-width: 580px) { .calc-grid { grid-template-columns: 1fr; } }
+
+.calc-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246, 250, 247, 0.9));
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+.calc-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 1rem; color: var(--color-text-secondary); }
+
+.select-wrap { margin-bottom: 1rem; }
+.select-wrap label { font-size: 12px; color: var(--color-text-secondary); display: block; margin-bottom: 4px; }
+select {
+  width: 100%;
+  font-size: 15px;
+  padding: 11px 13px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-border-tertiary);
+  background: rgba(255,255,255,0.92);
+  color: var(--color-text-primary);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.72);
+}
+
+select:focus,
+input[type=range]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.12);
+}
+
+.slider-wrap { margin-bottom: 1.25rem; }
+.slider-wrap[hidden] { display: none; }
+.slider-label-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--color-text-secondary); margin-bottom: 6px;
+}
+.slider-val {
+  font-size: 20px; font-weight: 500;
+  color: var(--iff-green-dark);
+  min-width: 40px; text-align: right;
+}
+input[type=range] {
+  width: 100%;
+  accent-color: var(--iff-green-dark);
+  filter: saturate(1.15);
+}
+
+.result-box {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(232, 245, 233, 0.95), rgba(243, 251, 244, 0.92));
+  border: 1px solid var(--iff-green-mid);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+
+.result-box::before {
+  content: '';
+  position: absolute;
+  inset: auto -10% 55% auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 142, 60, 0.2), transparent 68%);
+}
+.result-course {
+  position: relative;
+  z-index: 1;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--iff-green-dark);
+  text-align: center;
+  margin-bottom: 0.9rem;
+}
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.result-metric {
+  position: relative;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(46,125,50,0.18);
+  border-radius: var(--border-radius-md);
+  padding: 1rem;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+}
+.result-label { font-size: 12px; color: var(--iff-green-dark); margin-bottom: 4px; }
+.result-number { font-size: 38px; font-weight: 700; color: var(--iff-green-dark); line-height: 1; letter-spacing: -0.04em; }
+.result-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 10px; text-align: center; }
+
+@media (max-width: 580px) {
+  .result-course { font-size: 17px; }
+  .result-grid { grid-template-columns: 1fr; }
+}
+
+.formula-box {
+  background: rgba(246, 250, 247, 0.9);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  padding: 10px 14px;
+  margin-top: 1rem; font-size: 12px;
+  color: var(--color-text-secondary); line-height: 1.6;
+}
+.formula-box code {
+  font-family: var(--font-mono);
+  color: var(--iff-green-dark);
+  font-size: 12px;
+}
+
+.detail-rows { margin-top: 1rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.detail-cell {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  padding: 10px 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+}
+.detail-cell .dlabel { font-size: 11px; color: var(--color-text-secondary); }
+.detail-cell .dval { font-size: 16px; font-weight: 700; color: var(--color-text-primary); margin-top: 2px; }
+
+.chart-panel {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246, 250, 247, 0.88));
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
+}
+.chart-panel h3 { font-size: 14px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 0.75rem; }
+.chart-wrap { position: relative; width: 100%; }
+
+.chart-panel p {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.year-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.summary-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246, 250, 247, 0.86));
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-lg);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--shadow-card);
+}
+
+.summary-card .summary-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+
+.summary-card .summary-value {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--iff-green-dark);
+  letter-spacing: -0.04em;
+}
+
+.summary-card .summary-sub {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.year-note {
+  margin-bottom: 1rem;
+  padding: 0.95rem 1rem;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-border-primary);
+  background: rgba(232, 245, 233, 0.62);
+}
+
+.year-note strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: var(--iff-green-dark);
+}
+
+.year-legend {
+  margin-top: 14px;
+}
+
+.year-chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 1380px;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.legend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-tertiary);
+  background: rgba(255,255,255,0.78);
+  color: var(--color-text-secondary);
+  font-size: 11px;
+}
+
+.legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+@media (max-width: 860px) {
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .portaria-badge {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 580px) {
+  body {
+    padding: 18px 12px;
+  }
+
+  .app {
+    padding: 18px;
+    border-radius: 24px;
+  }
+
+  .header {
+    padding: 1.15rem;
+    border-radius: 22px;
+  }
+
+  .tabs {
+    border-radius: 18px;
+  }
+
+  .tab {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .detail-rows {
+    grid-template-columns: 1fr;
+  }
+
+  .year-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .year-chart-wrap {
+    height: 1880px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+
+<div class="app">
+  <h2 class="sr-only">Calculadora de Matrículas Equivalentes — IFF Campus Campos Centro, Portaria nº 146/2021</h2>
+
+  <div class="header">
+    <div class="logo-box">
+      <img src="logo.jpg" alt="Logotipo do IFF Campos Centro">
+    </div>
+    <div class="header-text">
+      <h1>Calculadora de Matrículas Equivalentes — <i>campus</i> Campos Centro - IFF</h1>
+      <p>Coordenação de Monitoramento e Gestão / Diretoria de Planejamento do Campos Centro</p>
+    </div>
+    <a class="portaria-badge" href="https://www.in.gov.br/web/dou/-/portaria-n-146-de-25-de-marco-de-2021-310597431" target="_blank" rel="noopener noreferrer">Portaria nº 146/2021</a>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" type="button" onclick="switchTab('calculadora', this)"><i class="ti ti-calculator" aria-hidden="true"></i> Calculadora</button>
+    <button class="tab" type="button" onclick="switchTab('tabela', this)"><i class="ti ti-table" aria-hidden="true"></i> Tabela de cursos</button>
+    <button class="tab" type="button" onclick="switchTab('grafico', this)"><i class="ti ti-chart-bar" aria-hidden="true"></i> Gráfico FEC</button>
+    <button class="tab" type="button" onclick="switchTab('ano-2024', this)"><i class="ti ti-chart-histogram" aria-hidden="true"></i> Ano 2024</button>
+  </div>
+
+  <div id="tabela" class="panel">
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="setFilter('todos', this)">Todos</button>
+      <button class="filter-btn" onclick="setFilter('técnico', this)">Técnico</button>
+      <button class="filter-btn" onclick="setFilter('graduação', this)">Graduação</button>
+      <button class="filter-btn" onclick="setFilter('pós graduação', this)">Pós-graduação</button>
+      <button class="filter-btn" onclick="setFilter('mestrado', this)">Mestrado</button>
+      <button class="filter-btn" onclick="setFilter('doutorado', this)">Doutorado</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Curso</th>
+            <th>FECH</th>
+            <th>FEC</th>
+            <th>Fonte (Anexo II)</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="calculadora" class="panel active">
+    <div class="calc-grid">
+      <div class="calc-card">
+        <h3><i class="ti ti-adjustments" aria-hidden="true"></i> Parâmetros</h3>
+        <div class="select-wrap">
+          <label>Curso</label>
+          <select id="curso-select" onchange="calcular()">
+            <option value="">— Selecione um curso —</option>
+          </select>
+        </div>
+        <div class="slider-wrap" id="carga-horaria-wrap" hidden>
+          <div class="slider-label-row">
+            <span>Carga horária (CHMR)</span>
+            <span class="slider-val" id="carga-horaria-display">160 h</span>
+          </div>
+          <input type="range" min="1" max="1000" step="1" value="160" id="carga-horaria-slider" oninput="onCargaHorariaChange(this.value)" />
+          <div class="slider-label-row" style="margin-top:2px; margin-bottom:0">
+            <span>1</span><span>500</span><span>1000</span>
+          </div>
+        </div>
+        <div class="slider-wrap">
+          <div class="slider-label-row">
+            <span>Matrículas reais</span>
+            <span class="slider-val" id="slider-display">0</span>
+          </div>
+          <input type="range" min="0" max="1000" step="1" value="0" id="matriculas-slider" oninput="onSlider(this.value)" />
+          <div class="slider-label-row" style="margin-top:2px; margin-bottom:0">
+            <span>0</span><span>500</span><span>1000</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="result-box" style="margin-bottom: 0.75rem;">
+          <div class="result-course" id="result-sub">Selecione um curso e informe as matrículas</div>
+          <div class="result-grid">
+            <div class="result-metric">
+              <div class="result-label"><i class="ti ti-list-numbers" aria-hidden="true"></i> Matrículas reais</div>
+              <div class="result-number" id="result-real">0</div>
+            </div>
+            <div class="result-metric">
+              <div class="result-label"><i class="ti ti-star" aria-hidden="true"></i> Matrículas equivalentes</div>
+              <div class="result-number" id="result-me">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-rows">
+          <div class="detail-cell">
+            <div class="dlabel">FECH do curso</div>
+            <div class="dval" id="detail-fech">—</div>
+          </div>
+          <div class="detail-cell">
+            <div class="dlabel">FEC do curso</div>
+            <div class="dval" id="detail-fec">—</div>
+          </div>
+          <div class="detail-cell">
+            <div class="dlabel">Fator combinado</div>
+            <div class="dval" id="detail-fator">—</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <strong>Fórmula:</strong><br>
+          <code>Matrícula Equivalente = Matrícula × FECH × FEC</code><br>
+          FECH = fator de equiparação de carga horária<br>
+          FEC = fator de esforço de curso
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="grafico" class="panel">
+    <div class="chart-panel">
+      <h3>FEC por curso — Campus Campos Centro</h3>
+      <div class="chart-wrap" style="height: 520px;">
+        <canvas id="fecChart" role="img" aria-label="Gráfico de barras horizontais com o FEC de cada curso do Campus Campos Centro"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div id="ano-2024" class="panel">
+    <div class="year-summary">
+      <div class="summary-card">
+        <div class="summary-label">Total de matrículas em 2024 do campus</div>
+        <div class="summary-value">8308</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Total de matrículas equivalentes em 2024 do campus</div>
+        <div class="summary-value">8151,54</div>
+      </div>
+    </div>
+
+    <div class="chart-panel">
+      <div class="year-note">
+        <strong>Observação</strong>
+        <p>Os dados foram retirados da Plataforma Nilo Peçanha (PNP) e refletem os últimos dados disponíveis, referente a 2024.</p>
+      </div>
+      <h3>Matrículas reais e equivalentes por curso — Ano 2024</h3>
+      <p>Os cursos estão ordenados da maior quantidade de matrículas reais para a menor.</p>
+      <p>A barra verde clara representa as matrículas reais e a verde escura representa as matrículas equivalentes.</p>
+      <div class="year-chart-wrap">
+        <canvas id="year2024Chart" role="img" aria-label="Gráfico horizontal com duas barras por curso para matrículas reais e equivalentes em 2024"></canvas>
+      </div>
+      <div class="chart-legend year-legend">
+        <span class="legend-pill"><span class="legend-swatch" style="background:#A5D6A7"></span>Matrículas reais</span>
+        <span class="legend-pill"><span class="legend-swatch" style="background:#1B5E20"></span>Matrículas equivalentes</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const FIC_OPTION_VALUE = 'fic';
+const FIC_DEFAULT_CHMR = 160;
+
+const CURSOS = [
+  {"grau":"técnico","nome_curso_completo":"Técnico em Automação Industrial","fech":1,"fec":1.183},
+  {"grau":"técnico","nome_curso_completo":"Técnico em Edificações","fech":1,"fec":1.068},
+  {"grau":"técnico","nome_curso_completo":"Técnico em Eletrotécnica","fech":1,"fec":1.120},
+  {"grau":"técnico","nome_curso_completo":"Técnico em Estradas","fech":1,"fec":1.010},
+  {"grau":"técnico","nome_curso_completo":"Técnico em Informática","fech":1,"fec":1.053},
+  {"grau":"técnico","nome_curso_completo":"Técnico em Segurança do Trabalho","fech":1,"fec":1.012},  
+  {"grau":"técnico","nome_curso_completo":"Técnico em Mecânica","fech":1,"fec":1.247},
+  {"grau":"técnico","nome_curso_completo":"Técnico em Química","fech":1,"fec":1.109},
+  {"grau":"técnico","nome_curso_completo":"Técnico em Telecomunicações","fech":1,"fec":1.083},
+  {"grau":"graduação","nome_curso_completo":"Bacharelado em Sistemas de Informação","fech":1,"fec":1.008},
+  {"grau":"graduação","nome_curso_completo":"Bacharelado em Engenharia de Computação","fech":1,"fec":1.237},
+  {"grau":"graduação","nome_curso_completo":"Bacharelado em Engenharia Elétrica","fech":1,"fec":1.108},
+  {"grau":"graduação","nome_curso_completo":"Bacharelado em Engenharia Mecânica","fech":1,"fec":1.078},
+  {"grau":"graduação","nome_curso_completo":"Bacharelado em Engenharia de Controle e Automação","fech":1,"fec":1.289},
+  {"grau":"graduação","nome_curso_completo":"Bacharelado em Arquitetura e Urbanismo","fech":1,"fec":1.071},
+  {"grau":"graduação","nome_curso_completo":"Bacharelado em Design Gráfico","fech":1,"fec":1.500},
+  {"grau":"graduação","nome_curso_completo":"Licenciatura em Ciências da Natureza","fech":1,"fec":1.000},
+  {"grau":"graduação","nome_curso_completo":"Licenciatura em Geografia","fech":1,"fec":1.029},
+  {"grau":"graduação","nome_curso_completo":"Licenciatura em Letras – Português e Literaturas","fech":1,"fec":1.024},
+  {"grau":"graduação","nome_curso_completo":"Licenciatura em Teatro","fech":1,"fec":1.079},
+  {"grau":"graduação","nome_curso_completo":"Licenciatura em Educação Física","fech":1,"fec":1.038},
+  {"grau":"graduação","nome_curso_completo":"Licenciatura em Matemática","fech":1,"fec":1.013},
+  {"grau":"graduação","nome_curso_completo":"Tecnólogo em Sistemas de Telecomunicações","fech":1,"fec":1.031},
+  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Redes de Computadores e Telecomunicações","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Cidades e suas Tecnologias","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Práticas Educacionais na Docência do Século XXI","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Educação, Ambiente e Sustentabilidade","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Literatura, Memória Cultural e Sociedade","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Educação Básica e Saberes Pedagógicos","fech":1,"fec":1.000},
+  {"grau":"mestrado","nome_curso_completo":"Mestrado Profissional em Sistemas Aplicados à Engenharia e Gestão (SAEG)","fech":1,"fec":1.000},
+  {"grau":"mestrado","nome_curso_completo":"Mestrado Nacional Profissional em Ensino de Física","fech":1,"fec":1.000},
+  {"grau":"mestrado","nome_curso_completo":"Mestrado Profissional em Ensino e suas Tecnologias (MPET)","fech":1,"fec":1.000},
+  {"grau":"mestrado","nome_curso_completo":"Mestrado Profissional em Arquitetura, Urbanismo e Tecnologias","fech":1,"fec":1.000},
+  {"grau":"doutorado","nome_curso_completo":"Doutorado Profissional em Modelagem e Tecnologia para Meio Ambiente — Recursos Hídricos (AmbHidro)","fech":1,"fec":1.000}
+];
+
+const MATRICULAS_2024 = [
+  { curso: 'Cursos de Qualificação Profissional (FIC)', reais: 1084, reaisRaw: '1084', equivalentes: 149.7375, equivalentesRaw: '149.7375' },
+  { curso: 'Técnico em Mecânica', reais: 635, reaisRaw: '635', equivalentes: 791.845, equivalentesRaw: '791.845' },
+  { curso: 'Técnico em Edificações', reais: 489, reaisRaw: '489', equivalentes: 522.252, equivalentesRaw: '522.252' },
+  { curso: 'Técnico em Eletrotécnica', reais: 468, reaisRaw: '468', equivalentes: 524.16, equivalentesRaw: '524.16' },
+  { curso: 'Técnico em Automação Industrial', reais: 378, reaisRaw: '378', equivalentes: 447.174, equivalentesRaw: '447.174' },
+  { curso: 'Bacharelado em Engenharia de Controle e Automação', reais: 351, reaisRaw: '351', equivalentes: 452.439, equivalentesRaw: '452.439' },
+  { curso: 'Bacharelado em Arquitetura e Urbanismo', reais: 348, reaisRaw: '348', equivalentes: 372.708, equivalentesRaw: '372.708' },
+  { curso: 'Bacharelado em Sistemas de Informação', reais: 335, reaisRaw: '335', equivalentes: 337.68, equivalentesRaw: '337.68' },
+  { curso: 'Licenciatura em Educação Física', reais: 329, reaisRaw: '329', equivalentes: 341.502, equivalentesRaw: '341.502' },
+  { curso: 'Licenciatura em Letras - Língua Portuguesa', reais: 316, reaisRaw: '316', equivalentes: 323.584, equivalentesRaw: '323.584' },
+  { curso: 'Técnico em Química', reais: 314, reaisRaw: '314', equivalentes: 348.226, equivalentesRaw: '348.226' },
+  { curso: 'Bacharelado em Engenharia Mecânica', reais: 298, reaisRaw: '298', equivalentes: 321.244, equivalentesRaw: '321.244' },
+  { curso: 'Licenciatura em Ciências da Natureza', reais: 279, reaisRaw: '279', equivalentes: 279, equivalentesRaw: '279' },
+  { curso: 'Licenciatura em Matemática', reais: 267, reaisRaw: '267', equivalentes: 270.471, equivalentesRaw: '270.471' },
+  { curso: 'Técnico em Informática', reais: 258, reaisRaw: '258', equivalentes: 271.674, equivalentesRaw: '271.674' },
+  { curso: 'Bacharelado em Engenharia de Computação', reais: 245, reaisRaw: '245', equivalentes: 303.065, equivalentesRaw: '303,065' },
+  { curso: 'Técnico em Telecomunicações', reais: 240, reaisRaw: '240', equivalentes: 259.92, equivalentesRaw: '259.92' },
+  { curso: 'Licenciatura em Geografia', reais: 232, reaisRaw: '232', equivalentes: 238.728, equivalentesRaw: '238.728' },
+  { curso: 'Bacharelado em Engenharia Elétrica', reais: 229, reaisRaw: '229', equivalentes: 253.732, equivalentesRaw: '253.732' },
+  { curso: 'Licenciatura em Teatro', reais: 204, reaisRaw: '204', equivalentes: 220.116, equivalentesRaw: '220,116' },
+  { curso: 'Bacharelado em Design', reais: 202, reaisRaw: '202', equivalentes: 303, equivalentesRaw: '303' },
+  { curso: 'Técnico em Segurança do Trabalho', reais: 188, reaisRaw: '188', equivalentes: 190.256, equivalentesRaw: '190.256' },
+  { curso: 'Mestrado Profissional em Sistemas Aplicados à Engenharia e Gestão', reais: 141, reaisRaw: '141', equivalentes: 141, equivalentesRaw: '141' },
+  { curso: 'Técnico em Estradas', reais: 128, reaisRaw: '128', equivalentes: 129.28, equivalentesRaw: '129.28' },
+  { curso: 'Tecnólogo em Sistemas de Telecomunicações', reais: 86, reaisRaw: '86', equivalentes: 88.666, equivalentesRaw: '88.666' },
+  { curso: 'Tecnólogo em Design Gráfico', reais: 78, reaisRaw: '78', equivalentes: 84.084, equivalentesRaw: '84.084' },
+  { curso: 'Mestrado Profissional em Arquitetura, Urbanismo e Tecnologias', reais: 57, reaisRaw: '57', equivalentes: 57, equivalentesRaw: '57' },
+  { curso: 'Doutorado Profissional em Modelagem e Tecnologia Aplicadas a Gestão de Recursos Hídricos', reais: 53, reaisRaw: '53', equivalentes: 53, equivalentesRaw: '53' },
+  { curso: 'Mestrado Profissional em Ensino e Suas Tecnologias', reais: 48, reaisRaw: '48', equivalentes: 48, equivalentesRaw: '48' },
+  { curso: 'Mestrado Profissional em Ensino de Física', reais: 26, reaisRaw: '26', equivalentes: 26, equivalentesRaw: '26' },
+  { curso: 'Tecnólogo em Manutenção Industrial', reais: 2, reaisRaw: '2', equivalentes: 2, equivalentesRaw: '2' }
+].sort((a, b) => b.reais - a.reais);
+
+const FONTES = [
+  "CONTROLE E PROCESSOS INDUSTRIAIS → TÉCNICO EM AUTOMAÇÃO INDUSTRIAL",
+  "INFRAESTRUTURA → TÉCNICO EM EDIFICAÇÕES",
+  "CONTROLE E PROCESSOS INDUSTRIAIS → TÉCNICO EM ELETROTÉCNICA",
+  "INFRAESTRUTURA → TÉCNICO EM ESTRADAS",
+  "INFORMAÇÃO E COMUNICAÇÃO → TÉCNICO EM INFORMÁTICA",
+  "SEGURANÇA → TÉCNICO EM SEGURANÇA DO TRABALHO",
+  "CONTROLE E PROCESSOS INDUSTRIAIS → TÉCNICO EM MECÂNICA",
+  "PRODUÇÃO INDUSTRIAL → TÉCNICO EM QUÍMICA",
+  "INFORMAÇÃO E COMUNICAÇÃO → TÉCNICO EM TELECOMUNICAÇÕES",
+  "BACHARELADO → INFORMAÇÃO E COMUNICAÇÃO → SISTEMAS DE INFORMAÇÃO",
+  "BACHARELADO → INFORMAÇÃO E COMUNICAÇÃO → ENGENHARIA DE COMPUTAÇÃO",
+  "BACHARELADO → CONTROLE E PROCESSOS → ENGENHARIA ELÉTRICA",
+  "BACHARELADO → CONTROLE E PROCESSOS → ENGENHARIA MECÂNICA",
+  "BACHARELADO → CONTROLE E PROCESSOS → ENG. CONTROLE E AUTOMAÇÃO",
+  "BACHARELADO → INFRAESTRUTURA → ARQUITETURA E URBANISMO",
+  "BACHARELADO → PRODUÇÃO CULTURAL E DESIGN → DESIGN",
+  "LICENCIATURA → DESENVOLVIMENTO EDUCACIONAL → CIÊNCIAS DA NATUREZA",
+  "LICENCIATURA → DESENVOLVIMENTO EDUCACIONAL → GEOGRAFIA",
+  "LICENCIATURA → DESENVOLVIMENTO EDUCACIONAL → LETRAS – LÍNGUA PORTUGUESA",
+  "LICENCIATURA → DESENVOLVIMENTO EDUCACIONAL → TEATRO",
+  "LICENCIATURA → DESENVOLVIMENTO EDUCACIONAL → EDUCAÇÃO FÍSICA",
+  "LICENCIATURA → DESENVOLVIMENTO EDUCACIONAL → MATEMÁTICA",
+  "TECNOLOGIA → INFORMAÇÃO E COMUNICAÇÃO → SISTEMAS DE TELECOMUNICAÇÕES",
+  "ESPECIALIZAÇÃO (LATO SENSU) → TODOS = 1,000",
+  "ESPECIALIZAÇÃO (LATO SENSU) → TODOS = 1,000",
+  "ESPECIALIZAÇÃO (LATO SENSU) → TODOS = 1,000",
+  "ESPECIALIZAÇÃO (LATO SENSU) → TODOS = 1,000",
+  "ESPECIALIZAÇÃO (LATO SENSU) → TODOS = 1,000",
+  "ESPECIALIZAÇÃO (LATO SENSU) → TODOS = 1,000",
+  "MESTRADO (ACADÊMICO/PROFISSIONAL) → TODOS = 1,000",
+  "MESTRADO (ACADÊMICO/PROFISSIONAL) → TODOS = 1,000",
+  "MESTRADO (ACADÊMICO/PROFISSIONAL) → TODOS = 1,000",
+  "MESTRADO (ACADÊMICO/PROFISSIONAL) → TODOS = 1,000",
+  "DOUTORADO (ACADÊMICO/PROFISSIONAL) → TODOS = 1,000"
+];
+
+let currentFilter = 'todos';
+
+function grauClass(g) {
+  return 'grau-' + g.replace(' ', '-').toLowerCase();
+}
+
+function renderTable() {
+  const tbody = document.getElementById('table-body');
+  const filtered = CURSOS.filter(c => currentFilter === 'todos' || c.grau === currentFilter);
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="4">Nenhum curso encontrado.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filtered.map((c, i) => {
+    const idx = CURSOS.indexOf(c);
+    return `<tr>
+      <td>${c.nome_curso_completo}</td>
+      <td>${c.fech.toFixed(3)}</td>
+      <td class="fec-val">${c.fec.toFixed(3)}</td>
+      <td class="fonte-cell">Anexo II → ${FONTES[idx]}</td>
+    </tr>`;
+  }).join('');
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+function switchTab(id, trigger) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  trigger.classList.add('active');
+  if (id === 'grafico' && !window._chartBuilt) buildChart();
+  if (id === 'ano-2024' && !window._yearChartBuilt) buildYearChart();
+}
+
+function populateSelect() {
+  const sel = document.getElementById('curso-select');
+  const ficOption = document.createElement('option');
+  ficOption.value = FIC_OPTION_VALUE;
+  ficOption.textContent = 'Cursos de qualificação profissional/FIC';
+  sel.appendChild(ficOption);
+
+  CURSOS.forEach((c, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = c.nome_curso_completo;
+    sel.appendChild(opt);
+  });
+}
+
+function onSlider(val) {
+  document.getElementById('slider-display').textContent = val;
+  document.getElementById('result-real').textContent = val;
+  calcular();
+}
+
+function onCargaHorariaChange(val) {
+  document.getElementById('carga-horaria-display').textContent = val + ' h';
+  calcular();
+}
+
+function updateCargaHorariaVisibility() {
+  const isFic = document.getElementById('curso-select').value === FIC_OPTION_VALUE;
+  document.getElementById('carga-horaria-wrap').hidden = !isFic;
+}
+
+function calcular() {
+  const sel = document.getElementById('curso-select');
+  const slider = document.getElementById('matriculas-slider');
+  const cargaHorariaSlider = document.getElementById('carga-horaria-slider');
+  const idx = sel.value;
+  const mat = parseInt(slider.value);
+  const chmr = parseInt(cargaHorariaSlider.value);
+  document.getElementById('slider-display').textContent = mat;
+  document.getElementById('result-real').textContent = mat;
+  document.getElementById('carga-horaria-display').textContent = chmr + ' h';
+  updateCargaHorariaVisibility();
+  if (idx === '') {
+    document.getElementById('result-real').textContent = mat;
+    document.getElementById('result-me').textContent = '—';
+    document.getElementById('result-sub').textContent = 'Selecione um curso e informe as matrículas';
+    document.getElementById('detail-fech').textContent = '—';
+    document.getElementById('detail-fec').textContent = '—';
+    document.getElementById('detail-fator').textContent = '—';
+    return;
+  }
+  const c = idx === FIC_OPTION_VALUE
+    ? {
+        nome_curso_completo: 'Cursos de qualificação profissional/FIC',
+        fech: chmr / 800,
+        fec: 1,
+      }
+    : CURSOS[parseInt(idx)];
+  const me = mat * c.fech * c.fec;
+  const fator = c.fech * c.fec;
+  document.getElementById('result-me').textContent = me.toFixed(2);
+  document.getElementById('result-sub').textContent = c.nome_curso_completo;
+  document.getElementById('detail-fech').textContent = c.fech.toFixed(3);
+  document.getElementById('detail-fec').textContent = c.fec.toFixed(3);
+  document.getElementById('detail-fator').textContent = fator.toFixed(3);
+}
+
+function splitLabelInLines(label, compact) {
+  const limit = compact ? 24 : 36;
+  if (label.length <= limit) return label;
+
+  const words = label.split(' ');
+  const maxLines = compact ? 3 : 2;
+  const lines = [];
+  let currentLine = '';
+
+  for (const word of words) {
+    const nextLine = currentLine ? `${currentLine} ${word}` : word;
+    if (nextLine.length <= limit || !currentLine) {
+      currentLine = nextLine;
+      continue;
+    }
+
+    lines.push(currentLine);
+    currentLine = word;
+
+    if (lines.length === maxLines - 1) {
+      break;
+    }
+  }
+
+  const consumedWords = lines.join(' ').split(' ').filter(Boolean).length;
+  const remainingWords = words.slice(consumedWords);
+  const lastLineBase = [currentLine, ...remainingWords.slice(1)].filter(Boolean).join(' ').trim()
+    || remainingWords[0]
+    || currentLine;
+
+  if (!lines.length) return label;
+
+  const lastLine = lastLineBase.length > limit
+    ? `${lastLineBase.slice(0, limit - 1).trimEnd()}…`
+    : lastLineBase;
+
+  return [...lines, lastLine];
+}
+
+function buildChart() {
+  window._chartBuilt = true;
+  const sorted = [...CURSOS].sort((a,b) => b.fec - a.fec);
+  const compactLabels = window.innerWidth <= 860;
+  const labels = sorted.map(c => {
+    return splitLabelInLines(c.nome_curso_completo, compactLabels);
+  });
+  const data = sorted.map(c => c.fec);
+  const colors = sorted.map(c => {
+    if (c.grau === 'técnico') return '#2E7D32';
+    if (c.grau === 'graduação') return '#1565C0';
+    if (c.grau === 'pós graduação') return '#BF360C';
+    if (c.grau === 'mestrado') return '#4527A0';
+    return '#880E4F';
+  });
+  const wrap = document.querySelector('.chart-wrap');
+  wrap.style.height = (sorted.length * (compactLabels ? 56 : 36) + 100) + 'px';
+  new Chart(document.getElementById('fecChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'FEC',
+        data,
+        backgroundColor: colors,
+        borderRadius: 3,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: {
+          left: compactLabels ? 8 : 0,
+          right: compactLabels ? 24 : 12
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: (items) => sorted[items[0].dataIndex].nome_curso_completo,
+            label: (item) => ' FEC: ' + item.raw.toFixed(3) + ' | ' + sorted[item.dataIndex].grau
+          }
+        }
+      },
+      scales: {
+        x: {
+          min: 0.95,
+          max: 1.55,
+          ticks: { font: { size: 11 }, callback: v => v.toFixed(3) },
+          grid: { color: 'rgba(0,0,0,0.06)' }
+        },
+        y: {
+          afterFit(scale) {
+            scale.width = compactLabels ? 210 : 250;
+          },
+          ticks: { font: { size: compactLabels ? 10 : 11 }, autoSkip: false }
+        }
+      }
+    }
+  });
+
+  const legend = document.querySelector('.chart-panel');
+  const legDiv = document.createElement('div');
+  legDiv.className = 'chart-legend';
+  const items = [
+    { color: '#2E7D32', label: 'Técnico' },
+    { color: '#1565C0', label: 'Graduação' },
+    { color: '#BF360C', label: 'Pós-graduação' },
+    { color: '#4527A0', label: 'Mestrado' },
+    { color: '#880E4F', label: 'Doutorado' }
+  ];
+  items.forEach(it => {
+    legDiv.innerHTML += `<span class="legend-pill"><span class="legend-swatch" style="background:${it.color}"></span>${it.label}</span>`;
+  });
+  legend.appendChild(legDiv);
+}
+
+function splitYearLabel(label) {
+  return splitLabelInLines(label, window.innerWidth <= 860);
+}
+
+const rawValueLabelPlugin = {
+  id: 'rawValueLabelPlugin',
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart;
+    ctx.save();
+    ctx.font = '11px IBM Plex Mono, monospace';
+    ctx.textBaseline = 'middle';
+
+    chart.data.datasets.forEach((dataset, datasetIndex) => {
+      const meta = chart.getDatasetMeta(datasetIndex);
+      meta.data.forEach((bar, index) => {
+        ctx.fillStyle = dataset.labelColor;
+        ctx.fillText(dataset.rawLabels[index], bar.x + 8, bar.y);
+      });
+    });
+
+    ctx.restore();
+  }
+};
+
+function buildYearChart() {
+  window._yearChartBuilt = true;
+  const compactLabels = window.innerWidth <= 860;
+  const labels = MATRICULAS_2024.map(item => splitYearLabel(item.curso));
+  const realValues = MATRICULAS_2024.map(item => item.reais);
+  const equivalentValues = MATRICULAS_2024.map(item => item.equivalentes);
+  const wrap = document.querySelector('.year-chart-wrap');
+  wrap.style.height = (MATRICULAS_2024.length * (compactLabels ? 62 : 42) + 130) + 'px';
+
+  new Chart(document.getElementById('year2024Chart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Matrículas reais',
+          data: realValues,
+          rawLabels: MATRICULAS_2024.map(item => item.reaisRaw),
+          labelColor: '#2E7D32',
+          backgroundColor: '#A5D6A7',
+          borderColor: '#81C784',
+          borderWidth: 1,
+          borderRadius: 4,
+          borderSkipped: false,
+          barThickness: 12
+        },
+        {
+          label: 'Matrículas equivalentes',
+          data: equivalentValues,
+          rawLabels: MATRICULAS_2024.map(item => item.equivalentesRaw),
+          labelColor: '#1B5E20',
+          backgroundColor: '#1B5E20',
+          borderColor: '#2E7D32',
+          borderWidth: 1,
+          borderRadius: 4,
+          borderSkipped: false,
+          barThickness: 12
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: {
+          left: compactLabels ? 8 : 0,
+          right: compactLabels ? 70 : 88
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: items => MATRICULAS_2024[items[0].dataIndex].curso,
+            label: context => {
+              const item = MATRICULAS_2024[context.dataIndex];
+              if (context.dataset.label === 'Matrículas reais') {
+                return ' Matrículas reais: ' + item.reaisRaw;
+              }
+              return ' Matrículas equivalentes: ' + item.equivalentesRaw;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          ticks: { font: { size: 11 } },
+          grid: { color: 'rgba(0,0,0,0.06)' }
+        },
+        y: {
+          afterFit(scale) {
+            scale.width = compactLabels ? 210 : 290;
+          },
+          ticks: { font: { size: compactLabels ? 10 : 11 }, autoSkip: false }
+        }
+      }
+    },
+    plugins: [rawValueLabelPlugin]
+  });
+}
+
+renderTable();
+populateSelect();
+document.getElementById('carga-horaria-slider').value = FIC_DEFAULT_CHMR;
+document.getElementById('carga-horaria-display').textContent = FIC_DEFAULT_CHMR + ' h';
+updateCargaHorariaVisibility();
+</script>
+</body>
+</html>
