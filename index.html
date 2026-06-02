@@ -582,7 +582,7 @@ input[type=range] {
     <button class="tab active" type="button" onclick="switchTab('calculadora', this)"><i class="ti ti-calculator" aria-hidden="true"></i> Calculadora</button>
     <button class="tab" type="button" onclick="switchTab('tabela', this)"><i class="ti ti-table" aria-hidden="true"></i> Tabela de cursos</button>
     <button class="tab" type="button" onclick="switchTab('grafico', this)"><i class="ti ti-chart-bar" aria-hidden="true"></i> Gráfico FEC</button>
-    <button class="tab" type="button" onclick="switchTab('ano-2024', this)"><i class="ti ti-chart-histogram" aria-hidden="true"></i> Ano 2024</button>
+    <button class="tab" type="button" onclick="switchTab('ano-2025', this)"><i class="ti ti-chart-histogram" aria-hidden="true"></i> Ano 2025</button>
   </div>
 
   <div id="tabela" class="panel">
@@ -690,28 +690,28 @@ input[type=range] {
     </div>
   </div>
 
-  <div id="ano-2024" class="panel">
+  <div id="ano-2025" class="panel">
     <div class="year-summary">
       <div class="summary-card">
-        <div class="summary-label">Total de matrículas em 2024 do campus</div>
-        <div class="summary-value">8308</div>
+        <div class="summary-label">Total de matrículas em 2025 do campus</div>
+        <div class="summary-value">8542</div>
       </div>
       <div class="summary-card">
-        <div class="summary-label">Total de matrículas equivalentes em 2024 do campus</div>
-        <div class="summary-value">8151,54</div>
+        <div class="summary-label">Total de matrículas equivalentes em 2025 do campus</div>
+        <div class="summary-value">8418,97</div>
       </div>
     </div>
 
     <div class="chart-panel">
       <div class="year-note">
         <strong>Observação</strong>
-        <p>Os dados foram retirados da Plataforma Nilo Peçanha (PNP) e refletem os últimos dados disponíveis, referente a 2024.</p>
+        <p>Os dados foram retirados da Plataforma Nilo Peçanha (PNP) e refletem os dados referentes a 2025.</p>
       </div>
-      <h3>Matrículas reais e equivalentes por curso — Ano 2024</h3>
+      <h3>Matrículas reais e equivalentes por curso — Ano 2025</h3>
       <p>Os cursos estão ordenados da maior quantidade de matrículas reais para a menor.</p>
       <p>A barra verde clara representa as matrículas reais e a verde escura representa as matrículas equivalentes.</p>
       <div class="year-chart-wrap">
-        <canvas id="year2024Chart" role="img" aria-label="Gráfico horizontal com duas barras por curso para matrículas reais e equivalentes em 2024"></canvas>
+        <canvas id="year2025Chart" role="img" aria-label="Gráfico horizontal com duas barras por curso para matrículas reais e equivalentes em 2025"></canvas>
       </div>
       <div class="chart-legend year-legend">
         <span class="legend-pill"><span class="legend-swatch" style="background:#A5D6A7"></span>Matrículas reais</span>
@@ -727,15 +727,15 @@ const FIC_OPTION_VALUE = 'fic';
 const FIC_DEFAULT_CHMR = 160;
 
 const CURSOS = [
-  {"grau":"técnico","nome_curso_completo":"Técnico em Automação Industrial","fech":1,"fec":1.183},
-  {"grau":"técnico","nome_curso_completo":"Técnico em Edificações","fech":1,"fec":1.068},
-  {"grau":"técnico","nome_curso_completo":"Técnico em Eletrotécnica","fech":1,"fec":1.120},
-  {"grau":"técnico","nome_curso_completo":"Técnico em Estradas","fech":1,"fec":1.010},
-  {"grau":"técnico","nome_curso_completo":"Técnico em Informática","fech":1,"fec":1.053},
-  {"grau":"técnico","nome_curso_completo":"Técnico em Segurança do Trabalho","fech":1,"fec":1.012},  
-  {"grau":"técnico","nome_curso_completo":"Técnico em Mecânica","fech":1,"fec":1.247},
-  {"grau":"técnico","nome_curso_completo":"Técnico em Química","fech":1,"fec":1.109},
-  {"grau":"técnico","nome_curso_completo":"Técnico em Telecomunicações","fech":1,"fec":1.083},
+  {"grau":"técnico","nome_curso_completo":"Curso Técnico em Informática","fech":1,"fec":1.053},
+  {"grau":"técnico","nome_curso_completo":"Curso Técnico em Automação Industrial","fech":1,"fec":1.183},
+  {"grau":"técnico","nome_curso_completo":"Curso Técnico em Edificações","fech":1,"fec":1.068},
+  {"grau":"técnico","nome_curso_completo":"Curso Técnico em Eletrotécnica","fech":1,"fec":1.120},
+  {"grau":"técnico","nome_curso_completo":"Curso Técnico em Telecomunicações","fech":1,"fec":1.083},
+  {"grau":"técnico","nome_curso_completo":"Curso Técnico em Estradas","fech":1,"fec":1.010},
+  {"grau":"técnico","nome_curso_completo":"Curso Técnico em Mecânica","fech":1,"fec":1.247},
+  {"grau":"técnico","nome_curso_completo":"Curso Técnico em Química","fech":1,"fec":1.109},
+  {"grau":"técnico","nome_curso_completo":"Curso Técnico em Segurança do Trabalho","fech":1,"fec":1.012},
   {"grau":"graduação","nome_curso_completo":"Bacharelado em Sistemas de Informação","fech":1,"fec":1.008},
   {"grau":"graduação","nome_curso_completo":"Bacharelado em Engenharia de Computação","fech":1,"fec":1.237},
   {"grau":"graduação","nome_curso_completo":"Bacharelado em Engenharia Elétrica","fech":1,"fec":1.108},
@@ -743,70 +743,76 @@ const CURSOS = [
   {"grau":"graduação","nome_curso_completo":"Bacharelado em Engenharia de Controle e Automação","fech":1,"fec":1.289},
   {"grau":"graduação","nome_curso_completo":"Bacharelado em Arquitetura e Urbanismo","fech":1,"fec":1.071},
   {"grau":"graduação","nome_curso_completo":"Bacharelado em Design Gráfico","fech":1,"fec":1.500},
-  {"grau":"graduação","nome_curso_completo":"Licenciatura em Ciências da Natureza","fech":1,"fec":1.000},
+  {"grau":"graduação","nome_curso_completo":"Licenciatura em Ciências da Natureza: Ciências e Biologia, Ciências e Física ou Ciências e Química","fech":1,"fec":1.000},
   {"grau":"graduação","nome_curso_completo":"Licenciatura em Geografia","fech":1,"fec":1.029},
   {"grau":"graduação","nome_curso_completo":"Licenciatura em Letras – Português e Literaturas","fech":1,"fec":1.024},
   {"grau":"graduação","nome_curso_completo":"Licenciatura em Teatro","fech":1,"fec":1.079},
   {"grau":"graduação","nome_curso_completo":"Licenciatura em Educação Física","fech":1,"fec":1.038},
   {"grau":"graduação","nome_curso_completo":"Licenciatura em Matemática","fech":1,"fec":1.013},
+  {"grau":"graduação","nome_curso_completo":"Tecnólogo em Design Gráfico","fech":1,"fec":1.078},
   {"grau":"graduação","nome_curso_completo":"Tecnólogo em Sistemas de Telecomunicações","fech":1,"fec":1.031},
-  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Redes de Computadores e Telecomunicações","fech":1,"fec":1.000},
-  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Cidades e suas Tecnologias","fech":1,"fec":1.000},
-  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Práticas Educacionais na Docência do Século XXI","fech":1,"fec":1.000},
-  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Educação, Ambiente e Sustentabilidade","fech":1,"fec":1.000},
-  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Literatura, Memória Cultural e Sociedade","fech":1,"fec":1.000},
-  {"grau":"pós graduação","nome_curso_completo":"Pós-Graduação em Educação Básica e Saberes Pedagógicos","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós Graduação em Redes de Computadores e Telecomunicações","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós Graduação em Cidades e suas Tecnologias","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós Graduação em Práticas Educacionais na Docência do Século XXI","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós Graduação em Educação, Ambiente e Sustentabilidade","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós Graduação em Literatura, Memória Cultural e Sociedade","fech":1,"fec":1.000},
+  {"grau":"pós graduação","nome_curso_completo":"Pós Graduação em Educação Básica e Saberes Pedagógicos na Contemporaneidade","fech":1,"fec":1.000},
   {"grau":"mestrado","nome_curso_completo":"Mestrado Profissional em Sistemas Aplicados à Engenharia e Gestão (SAEG)","fech":1,"fec":1.000},
   {"grau":"mestrado","nome_curso_completo":"Mestrado Nacional Profissional em Ensino de Física","fech":1,"fec":1.000},
   {"grau":"mestrado","nome_curso_completo":"Mestrado Profissional em Ensino e suas Tecnologias (MPET)","fech":1,"fec":1.000},
   {"grau":"mestrado","nome_curso_completo":"Mestrado Profissional em Arquitetura, Urbanismo e Tecnologias","fech":1,"fec":1.000},
-  {"grau":"doutorado","nome_curso_completo":"Doutorado Profissional em Modelagem e Tecnologia para Meio Ambiente — Recursos Hídricos (AmbHidro)","fech":1,"fec":1.000}
+  {"grau":"doutorado","nome_curso_completo":"Doutorado Profissional em Modelagem e Tecnologia para Meio Ambiente Aplicadas em Recursos Hídricos (AmbHidro)","fech":1,"fec":1.000}
 ];
 
-const MATRICULAS_2024 = [
-  { curso: 'Cursos de Qualificação Profissional (FIC)', reais: 1084, reaisRaw: '1084', equivalentes: 149.7375, equivalentesRaw: '149.7375' },
-  { curso: 'Técnico em Mecânica', reais: 635, reaisRaw: '635', equivalentes: 791.845, equivalentesRaw: '791.845' },
-  { curso: 'Técnico em Edificações', reais: 489, reaisRaw: '489', equivalentes: 522.252, equivalentesRaw: '522.252' },
-  { curso: 'Técnico em Eletrotécnica', reais: 468, reaisRaw: '468', equivalentes: 524.16, equivalentesRaw: '524.16' },
-  { curso: 'Técnico em Automação Industrial', reais: 378, reaisRaw: '378', equivalentes: 447.174, equivalentesRaw: '447.174' },
-  { curso: 'Bacharelado em Engenharia de Controle e Automação', reais: 351, reaisRaw: '351', equivalentes: 452.439, equivalentesRaw: '452.439' },
-  { curso: 'Bacharelado em Arquitetura e Urbanismo', reais: 348, reaisRaw: '348', equivalentes: 372.708, equivalentesRaw: '372.708' },
-  { curso: 'Bacharelado em Sistemas de Informação', reais: 335, reaisRaw: '335', equivalentes: 337.68, equivalentesRaw: '337.68' },
-  { curso: 'Licenciatura em Educação Física', reais: 329, reaisRaw: '329', equivalentes: 341.502, equivalentesRaw: '341.502' },
-  { curso: 'Licenciatura em Letras - Língua Portuguesa', reais: 316, reaisRaw: '316', equivalentes: 323.584, equivalentesRaw: '323.584' },
-  { curso: 'Técnico em Química', reais: 314, reaisRaw: '314', equivalentes: 348.226, equivalentesRaw: '348.226' },
-  { curso: 'Bacharelado em Engenharia Mecânica', reais: 298, reaisRaw: '298', equivalentes: 321.244, equivalentesRaw: '321.244' },
-  { curso: 'Licenciatura em Ciências da Natureza', reais: 279, reaisRaw: '279', equivalentes: 279, equivalentesRaw: '279' },
-  { curso: 'Licenciatura em Matemática', reais: 267, reaisRaw: '267', equivalentes: 270.471, equivalentesRaw: '270.471' },
-  { curso: 'Técnico em Informática', reais: 258, reaisRaw: '258', equivalentes: 271.674, equivalentesRaw: '271.674' },
-  { curso: 'Bacharelado em Engenharia de Computação', reais: 245, reaisRaw: '245', equivalentes: 303.065, equivalentesRaw: '303,065' },
-  { curso: 'Técnico em Telecomunicações', reais: 240, reaisRaw: '240', equivalentes: 259.92, equivalentesRaw: '259.92' },
-  { curso: 'Licenciatura em Geografia', reais: 232, reaisRaw: '232', equivalentes: 238.728, equivalentesRaw: '238.728' },
-  { curso: 'Bacharelado em Engenharia Elétrica', reais: 229, reaisRaw: '229', equivalentes: 253.732, equivalentesRaw: '253.732' },
-  { curso: 'Licenciatura em Teatro', reais: 204, reaisRaw: '204', equivalentes: 220.116, equivalentesRaw: '220,116' },
-  { curso: 'Bacharelado em Design', reais: 202, reaisRaw: '202', equivalentes: 303, equivalentesRaw: '303' },
-  { curso: 'Técnico em Segurança do Trabalho', reais: 188, reaisRaw: '188', equivalentes: 190.256, equivalentesRaw: '190.256' },
-  { curso: 'Mestrado Profissional em Sistemas Aplicados à Engenharia e Gestão', reais: 141, reaisRaw: '141', equivalentes: 141, equivalentesRaw: '141' },
-  { curso: 'Técnico em Estradas', reais: 128, reaisRaw: '128', equivalentes: 129.28, equivalentesRaw: '129.28' },
-  { curso: 'Tecnólogo em Sistemas de Telecomunicações', reais: 86, reaisRaw: '86', equivalentes: 88.666, equivalentesRaw: '88.666' },
-  { curso: 'Tecnólogo em Design Gráfico', reais: 78, reaisRaw: '78', equivalentes: 84.084, equivalentesRaw: '84.084' },
-  { curso: 'Mestrado Profissional em Arquitetura, Urbanismo e Tecnologias', reais: 57, reaisRaw: '57', equivalentes: 57, equivalentesRaw: '57' },
-  { curso: 'Doutorado Profissional em Modelagem e Tecnologia Aplicadas a Gestão de Recursos Hídricos', reais: 53, reaisRaw: '53', equivalentes: 53, equivalentesRaw: '53' },
-  { curso: 'Mestrado Profissional em Ensino e Suas Tecnologias', reais: 48, reaisRaw: '48', equivalentes: 48, equivalentesRaw: '48' },
-  { curso: 'Mestrado Profissional em Ensino de Física', reais: 26, reaisRaw: '26', equivalentes: 26, equivalentesRaw: '26' },
-  { curso: 'Tecnólogo em Manutenção Industrial', reais: 2, reaisRaw: '2', equivalentes: 2, equivalentesRaw: '2' }
+const MATRICULAS_2025 = [
+  { curso: 'Curso Técnico em Informática', reais: 255, reaisRaw: '255', equivalentes: 268.52, equivalentesRaw: '268,52' },
+  { curso: 'Curso Técnico em Automação Industrial', reais: 418, reaisRaw: '418', equivalentes: 494.49, equivalentesRaw: '494,49' },
+  { curso: 'Curso Técnico em Edificações', reais: 481, reaisRaw: '481', equivalentes: 513.71, equivalentesRaw: '513,71' },
+  { curso: 'Curso Técnico em Eletrotécnica', reais: 517, reaisRaw: '517', equivalentes: 579.04, equivalentesRaw: '579,04' },
+  { curso: 'Curso Técnico em Telecomunicações', reais: 243, reaisRaw: '243', equivalentes: 263.17, equivalentesRaw: '263,17' },
+  { curso: 'Curso Técnico em Estradas', reais: 130, reaisRaw: '130', equivalentes: 131.3, equivalentesRaw: '131,3' },
+  { curso: 'Curso Técnico em Mecânica', reais: 709, reaisRaw: '709', equivalentes: 884.12, equivalentesRaw: '884,12' },
+  { curso: 'Curso Técnico em Química', reais: 340, reaisRaw: '340', equivalentes: 377.06, equivalentesRaw: '377,06' },
+  { curso: 'Curso Técnico em Segurança do Trabalho', reais: 194, reaisRaw: '194', equivalentes: 196.33, equivalentesRaw: '196,33' },
+  { curso: 'Bacharelado em Sistemas de Informação', reais: 328, reaisRaw: '328', equivalentes: 330.62, equivalentesRaw: '330,62' },
+  { curso: 'Bacharelado em Engenharia de Computação', reais: 173, reaisRaw: '173', equivalentes: 214, equivalentesRaw: '214' },
+  { curso: 'Bacharelado em Engenharia Elétrica', reais: 233, reaisRaw: '233', equivalentes: 258.16, equivalentesRaw: '258,16' },
+  { curso: 'Bacharelado em Engenharia Mecânica', reais: 330, reaisRaw: '330', equivalentes: 355.74, equivalentesRaw: '355,74' },
+  { curso: 'Bacharelado em Engenharia de Controle e Automação', reais: 321, reaisRaw: '321', equivalentes: 413.77, equivalentesRaw: '413,77' },
+  { curso: 'Bacharelado em Arquitetura e Urbanismo', reais: 349, reaisRaw: '349', equivalentes: 373.78, equivalentesRaw: '373,78' },
+  { curso: 'Bacharelado em Design Gráfico', reais: 181, reaisRaw: '181', equivalentes: 271.5, equivalentesRaw: '271,5' },
+  { curso: 'Licenciatura em Ciências da Natureza: Ciências e Biologia, Ciências e Física ou Ciências e Química', reais: 280, reaisRaw: '280', equivalentes: 280, equivalentesRaw: '280' },
+  { curso: 'Licenciatura em Geografia', reais: 242, reaisRaw: '242', equivalentes: 249.02, equivalentesRaw: '249,02' },
+  { curso: 'Licenciatura em Letras – Português e Literaturas', reais: 305, reaisRaw: '305', equivalentes: 312.32, equivalentesRaw: '312,32' },
+  { curso: 'Licenciatura em Teatro', reais: 179, reaisRaw: '179', equivalentes: 193.14, equivalentesRaw: '193,14' },
+  { curso: 'Licenciatura em Educação Física', reais: 331, reaisRaw: '331', equivalentes: 343.58, equivalentesRaw: '343,58' },
+  { curso: 'Licenciatura em Matemática', reais: 253, reaisRaw: '253', equivalentes: 256.29, equivalentesRaw: '256,29' },
+  { curso: 'Tecnólogo em Design Gráfico', reais: 32, reaisRaw: '32', equivalentes: 34.5, equivalentesRaw: '34,5' },
+  { curso: 'Tecnólogo em Sistemas de Telecomunicações', reais: 87, reaisRaw: '87', equivalentes: 89.7, equivalentesRaw: '89,7' },
+  { curso: 'Pós Graduação em Redes de Computadores e Telecomunicações', reais: 29, reaisRaw: '29', equivalentes: 29, equivalentesRaw: '29' },
+  { curso: 'Pós Graduação em Cidades e suas Tecnologias', reais: 32, reaisRaw: '32', equivalentes: 32, equivalentesRaw: '32' },
+  { curso: 'Pós Graduação em Práticas Educacionais na Docência do Século XXI', reais: 63, reaisRaw: '63', equivalentes: 63, equivalentesRaw: '63' },
+  { curso: 'Pós Graduação em Educação, Ambiente e Sustentabilidade', reais: 45, reaisRaw: '45', equivalentes: 45, equivalentesRaw: '45' },
+  { curso: 'Pós Graduação em Literatura, Memória Cultural e Sociedade', reais: 68, reaisRaw: '68', equivalentes: 68, equivalentesRaw: '68' },
+  { curso: 'Pós Graduação em Educação Básica e Saberes Pedagógicos na Contemporaneidade', reais: 54, reaisRaw: '54', equivalentes: 54, equivalentesRaw: '54' },
+  { curso: 'Mestrado Profissional em Sistemas Aplicados à Engenharia e Gestão (SAEG)', reais: 143, reaisRaw: '143', equivalentes: 143, equivalentesRaw: '143' },
+  { curso: 'Mestrado Nacional Profissional em Ensino de Física', reais: 29, reaisRaw: '29', equivalentes: 29, equivalentesRaw: '29' },
+  { curso: 'Mestrado Profissional em Ensino e suas Tecnologias (MPET)', reais: 34, reaisRaw: '34', equivalentes: 34, equivalentesRaw: '34' },
+  { curso: 'Mestrado Profissional em Arquitetura, Urbanismo e Tecnologias', reais: 61, reaisRaw: '61', equivalentes: 61, equivalentesRaw: '61' },
+  { curso: 'Doutorado Profissional em Modelagem e Tecnologia para Meio Ambiente Aplicadas em Recursos Hídricos (AmbHidro)', reais: 57, reaisRaw: '57', equivalentes: 57, equivalentesRaw: '57' },
+  { curso: 'Cursos de Qualificação Profissional (FIC)', reais: 1016, reaisRaw: '1016', equivalentes: 120.13, equivalentesRaw: '120,13' }
 ].sort((a, b) => b.reais - a.reais);
 
 const FONTES = [
+  "INFORMAÇÃO E COMUNICAÇÃO → TÉCNICO EM INFORMÁTICA",
   "CONTROLE E PROCESSOS INDUSTRIAIS → TÉCNICO EM AUTOMAÇÃO INDUSTRIAL",
   "INFRAESTRUTURA → TÉCNICO EM EDIFICAÇÕES",
   "CONTROLE E PROCESSOS INDUSTRIAIS → TÉCNICO EM ELETROTÉCNICA",
+  "INFORMAÇÃO E COMUNICAÇÃO → TÉCNICO EM TELECOMUNICAÇÕES",
   "INFRAESTRUTURA → TÉCNICO EM ESTRADAS",
-  "INFORMAÇÃO E COMUNICAÇÃO → TÉCNICO EM INFORMÁTICA",
-  "SEGURANÇA → TÉCNICO EM SEGURANÇA DO TRABALHO",
   "CONTROLE E PROCESSOS INDUSTRIAIS → TÉCNICO EM MECÂNICA",
   "PRODUÇÃO INDUSTRIAL → TÉCNICO EM QUÍMICA",
-  "INFORMAÇÃO E COMUNICAÇÃO → TÉCNICO EM TELECOMUNICAÇÕES",
+  "SEGURANÇA → TÉCNICO EM SEGURANÇA DO TRABALHO",
   "BACHARELADO → INFORMAÇÃO E COMUNICAÇÃO → SISTEMAS DE INFORMAÇÃO",
   "BACHARELADO → INFORMAÇÃO E COMUNICAÇÃO → ENGENHARIA DE COMPUTAÇÃO",
   "BACHARELADO → CONTROLE E PROCESSOS → ENGENHARIA ELÉTRICA",
@@ -820,6 +826,7 @@ const FONTES = [
   "LICENCIATURA → DESENVOLVIMENTO EDUCACIONAL → TEATRO",
   "LICENCIATURA → DESENVOLVIMENTO EDUCACIONAL → EDUCAÇÃO FÍSICA",
   "LICENCIATURA → DESENVOLVIMENTO EDUCACIONAL → MATEMÁTICA",
+  "TECNOLOGIA → PRODUÇÃO CULTURAL E DESIGN → DESIGN GRÁFICO",
   "TECNOLOGIA → INFORMAÇÃO E COMUNICAÇÃO → SISTEMAS DE TELECOMUNICAÇÕES",
   "ESPECIALIZAÇÃO (LATO SENSU) → TODOS = 1,000",
   "ESPECIALIZAÇÃO (LATO SENSU) → TODOS = 1,000",
@@ -871,7 +878,7 @@ function switchTab(id, trigger) {
   document.getElementById(id).classList.add('active');
   trigger.classList.add('active');
   if (id === 'grafico' && !window._chartBuilt) buildChart();
-  if (id === 'ano-2024' && !window._yearChartBuilt) buildYearChart();
+  if (id === 'ano-2025' && !window._yearChartBuilt) buildYearChart();
 }
 
 function populateSelect() {
@@ -1088,13 +1095,13 @@ const rawValueLabelPlugin = {
 function buildYearChart() {
   window._yearChartBuilt = true;
   const compactLabels = window.innerWidth <= 860;
-  const labels = MATRICULAS_2024.map(item => splitYearLabel(item.curso));
-  const realValues = MATRICULAS_2024.map(item => item.reais);
-  const equivalentValues = MATRICULAS_2024.map(item => item.equivalentes);
+  const labels = MATRICULAS_2025.map(item => splitYearLabel(item.curso));
+  const realValues = MATRICULAS_2025.map(item => item.reais);
+  const equivalentValues = MATRICULAS_2025.map(item => item.equivalentes);
   const wrap = document.querySelector('.year-chart-wrap');
-  wrap.style.height = (MATRICULAS_2024.length * (compactLabels ? 62 : 42) + 130) + 'px';
+  wrap.style.height = (MATRICULAS_2025.length * (compactLabels ? 62 : 42) + 130) + 'px';
 
-  new Chart(document.getElementById('year2024Chart'), {
+  new Chart(document.getElementById('year2025Chart'), {
     type: 'bar',
     data: {
       labels,
@@ -1102,7 +1109,7 @@ function buildYearChart() {
         {
           label: 'Matrículas reais',
           data: realValues,
-          rawLabels: MATRICULAS_2024.map(item => item.reaisRaw),
+          rawLabels: MATRICULAS_2025.map(item => item.reaisRaw),
           labelColor: '#2E7D32',
           backgroundColor: '#A5D6A7',
           borderColor: '#81C784',
@@ -1114,7 +1121,7 @@ function buildYearChart() {
         {
           label: 'Matrículas equivalentes',
           data: equivalentValues,
-          rawLabels: MATRICULAS_2024.map(item => item.equivalentesRaw),
+          rawLabels: MATRICULAS_2025.map(item => item.equivalentesRaw),
           labelColor: '#1B5E20',
           backgroundColor: '#1B5E20',
           borderColor: '#2E7D32',
@@ -1139,9 +1146,9 @@ function buildYearChart() {
         legend: { display: false },
         tooltip: {
           callbacks: {
-            title: items => MATRICULAS_2024[items[0].dataIndex].curso,
+            title: items => MATRICULAS_2025[items[0].dataIndex].curso,
             label: context => {
-              const item = MATRICULAS_2024[context.dataIndex];
+              const item = MATRICULAS_2025[context.dataIndex];
               if (context.dataset.label === 'Matrículas reais') {
                 return ' Matrículas reais: ' + item.reaisRaw;
               }
